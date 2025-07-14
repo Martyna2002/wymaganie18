@@ -22,6 +22,7 @@ assert System.properties["java.specification.version"] == "17" || "18" || "19" |
 
 ext {
     springProfiles = ""
+    mapstructVersion = "1.5.5.Final"
     if (project.hasProperty("tls")) {
         springProfiles += ",tls"
     }
@@ -161,6 +162,7 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
@@ -168,9 +170,14 @@ task cleanResources(type: Delete) {
     delete "build/resources"
 }
 
+tasks.named("modernizer").configure {
+    enabled = false
+}
+
 wrapper {
     gradleVersion = "8.6"
 }
+
 
 
 compileJava.dependsOn processResources
